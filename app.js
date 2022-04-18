@@ -16,13 +16,13 @@ app.post("/", async (req, res) => {
   if (nombre) {
     const data = { name: nombre, date: new Date() };
       const info = new Visitor(data);
-      info.save();
+      await info.save();
       res.status(200).send("<h1> El visitante fue almacenado con éxito </h1>");
      
   } else {
     const data = { name: "Anónimo", date: new Date() };
       const info = new Visitor(data);
-      info.save();
+      await info.save();
     
   }
 });
