@@ -5,7 +5,7 @@ const mongoose = require("mongoose");
 app.set("view engine", "pug");
 app.set("views","views");
 
-mongoose.connect(process.env.MONGODB_URL || 'mongodb://127.0.0.1:27017/mongo-1', { useNewUrlParser: true });
+mongoose.connect(process.env.MONGODB_URL || 'mongodb://0.0.0.0:27017/mongo-1', { useNewUrlParser: true });
 
 const schema = mongoose.Schema({
   name: String,
@@ -27,12 +27,13 @@ app.post("/", async (req, res) => {
     const data = { name: "Anónimo", date: new Date() };
       const info = new Visitor(data);
       await info.save();
+      res.redirect("/")
     
   }
 });
 
 app.get("/", (req, res)=>{
-  res.render("index")
+  res.status(200).send("<h1> El visitante fue almacenado con éxito </h1>")
 })
 
 app.listen(3000, () => console.log("server listening in port 3000"));
