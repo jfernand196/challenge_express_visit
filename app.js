@@ -8,23 +8,23 @@ app.set("views","views");
 mongoose.connect(process.env.MONGODB_URL || 'mongodb://0.0.0.0:27017/mongo-1', { useNewUrlParser: true });
 
 const schema = mongoose.Schema({
-  name: String,
-  date: Date
-});
+  date: Date,
+  name: String
+  });
 
 const Visitor = mongoose.model("Visitor", schema);
 
 app.post("/", async (req, res) => {
   const nombre = req.query.name;
   if (nombre) {
-    const data = { name: nombre, date: new Date() };  // other way Date.now()
+    const data = { date: new Date(), name: nombre };  // other way Date.now()
       const info = new Visitor(data);
       await info.save();
       res.redirect("/")
-      // res.status(200).send("<h1> El visitante fue almacenado con éxito </h1>");
+      
      
   } else {
-    const data = { name: "Anónimo", date: new Date() };
+    const data = { date: new Date(), name: "Anónimo" };
       const info = new Visitor(data);
       await info.save();
       res.redirect("/")
